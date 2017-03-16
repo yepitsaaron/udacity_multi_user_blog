@@ -306,7 +306,7 @@ class Register(Signup):
             u.put()
 
             self.login(u)
-            self.redirect('/')
+            self.redirect('/welcome')
 
 
 class EditPost(Handler):
