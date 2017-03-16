@@ -4,9 +4,9 @@
 
     {% if posts %}
 
-        {% for p in posts %}
+        {% for post in posts %}
 
-            {{ p.render(user) | safe }}
+            {{ post.render(user) | safe }}
 
         {% endfor %}
 

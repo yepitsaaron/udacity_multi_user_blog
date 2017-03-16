@@ -154,7 +154,7 @@ class Post(db.Model):
     def render(self, user):
         comments = Comment.all().filter('post_id =', self).order('-created')
         self._render_text = self.content.replace('\n', '<br>')
-        return render_str("post.html", p=self, user=user, comments=comments)
+        return render_str("post.html", post=self, user=user, comments=comments)
 
 
 
@@ -177,7 +177,7 @@ class Comment(db.Model):
 
     def render(self):
         self._render_text = self.content.replace('\n', '<br>')
-        return render_str("new_comment.html", p = self)
+        return render_str("new_comment.html", post = self)
 
 class HomePage(Handler):
 
@@ -496,6 +496,8 @@ class LikePost(Handler):
         else:
             posts.likes += 1
         # TODO: add an "unlike" feature
+
+        # save to the db
         posts.put()
         self.redirect('/')
 

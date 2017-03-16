@@ -1,34 +1,34 @@
 <div class="post">
     <div class="post-heading">
         <div class="post-title">
-            {{p.subject}}
+            {{post.subject}}
         </div>
         <br>
         <div class="post-date">
-            {{p.created.strftime("%b %d, %Y")}}
+            {{post.created.strftime("%b %d, %Y")}}
         </div>
     </div>
     <div class="post-content">
-        {{p._render_text | safe}}
+        {{post._render_text | safe}}
     </div>
         <br>
-        By: {{p.name.name}}
+        By: {{post.name.name}}
         <br>
-        <p>Likes: {{p.likes}} </p>
+        <p>Likes: {{post.likes}} </p>
 
-        {% if user and p.name.key().id() == user.key().id() %}
+        {% if user and post.name.key().id() == user.key().id() %}
 
-                <a href="/{{p.key().id()}}/edit_post" class="nav">Edit</a>
+                <a href="/{{post.key().id()}}/edit_post" class="nav">Edit</a>
 
-                <a href="/{{p.key().id()}}/delete_post" class="nav">Delete</a>
+                <a href="/{{post.key().id()}}/delete_post" class="nav">Delete</a>
 
-                {% elif p.name.name != user.name %}
-                    <form action="/{{p.key().id()}}/like" method="post">
+                {% elif post.name.name != user.name %}
+                    <form action="/{{post.key().id()}}/like" method="post">
                         <!-- <input type="hidden" value="{{user.name}}" name="name"> -->
                         <input type="submit" value="Like">
                     </form>
 
-                    <a href="/new_comment/{{p.key().id()}}" class="nav">Comment</a>
+                    <a href="/new_comment/{{post.key().id()}}" class="nav">Comment</a>
 
                 <br>
                 <br>
@@ -37,7 +37,7 @@
                 <h3>Comments</h3>
                 {% for comment in comments %}
 
-                    {% if p.key().id() == comment.post_id.key().id() %}
+                    {% if post.key().id() == comment.post_id.key().id() %}
                         <strong>{{comment.name}}: </strong>{{comment.content}}
                         <br>
 
