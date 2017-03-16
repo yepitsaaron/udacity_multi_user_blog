@@ -18,9 +18,9 @@
 
         {% if user and p.name.key().id() == user.key().id() %}
 
-                <a href="/{{p.key().id()}}/editpost" class="nav">Edit</a>
+                <a href="/{{p.key().id()}}/edit_post" class="nav">Edit</a>
 
-                <a href="/{{p.key().id()}}/deletepost" class="nav">Delete</a>
+                <a href="/{{p.key().id()}}/delete_post" class="nav">Delete</a>
 
                 {% elif p.name.name != user.name %}
                     <form action="/{{p.key().id()}}/like" method="post">
@@ -28,26 +28,26 @@
                         <input type="submit" value="Like">
                     </form>
 
-                    <a href="/newcomment/{{p.key().id()}}" class="nav">Comment</a>
+                    <a href="/new_comment/{{p.key().id()}}" class="nav">Comment</a>
 
                 <br>
                 <br>
 
 
                 <h3>Comments</h3>
-                {% for c in comments %}
+                {% for comment in comments %}
 
-                    {% if p.key().id() == c.post_id.key().id() %}
-                        <strong>{{c.name}}: </strong>{{c.content}}
+                    {% if p.key().id() == comment.post_id.key().id() %}
+                        <strong>{{comment.name}}: </strong>{{comment.content}}
                         <br>
 
 
 
                     {% endif %}
 
-                    {% if c.name == user.name %}
+                    {% if comment.name == user.name %}
 
-                        <a href="/editcomment/{{c.key().id()}}" class="nav-comments">Edit</a> | <a href="/deletecomment/{{c.key().id()}}" class="nav-comments">Delete</a>
+                        <a href="/edit_comment/{{comment.key().id()}}" class="nav-comments">Edit</a> | <a href="/delete_comment/{{comment.key().id()}}" class="nav-comments">Delete</a>
 
                     {% endif %}
 

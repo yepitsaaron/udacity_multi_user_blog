@@ -177,7 +177,7 @@ class Comment(db.Model):
 
     def render(self):
         self._render_text = self.content.replace('\n', '<br>')
-        return render_str("comment.html", p = self)
+        return render_str("new_comment.html", p = self)
 
 class HomePage(Handler):
 
@@ -206,7 +206,7 @@ class NewPost(Handler):
 
     def get(self):
         if self.user:
-            self.render("newpost.html")
+            self.render("new_post.html")
         else:
             self.redirect("/login")
 
@@ -229,7 +229,7 @@ class NewPost(Handler):
             self.redirect('/%s' % str(p.key().id()))
         else:
             error = 'You did not enter subject or content!'
-            self.render("newpost.html", subject=subject, content=content,
+            self.render("new_post.html", subject=subject, content=content,
                         error=error, comments=comments)
 
 
@@ -319,7 +319,7 @@ class EditPost(Handler):
             self.error(404)
             return
 
-        self.render("editpost.html", post=post)
+        self.render("edit_post.html", post=post)
 
     def post(self, post_id):
 
@@ -344,8 +344,8 @@ class EditPost(Handler):
             post.put()
             self.redirect('/%s' % str(post.key().id()))
         else:
-            error = 'You did not enter subject or content!'
-            self.render("newpost.html", subject=subject, content=content,
+            error = 'Please enter a subject or content'
+            self.render("new_post.html", subject=subject, content=content,
                         error=error, likes=likes, author=author)
 
 
@@ -358,7 +358,7 @@ class DeletePost(Handler):
             if not self.user:
                 self.redirect("/login")
             else:
-                self.render('deletepost.html', post_id=id)
+                self.render('delete_post.html', post_id=id)
 
     def post(self, post_id):
         if self.user:
@@ -376,7 +376,7 @@ class NewComment(Handler):
 
     def get(self, post_id):
         if self.user:
-            self.render("comment.html", postId= post_id)
+            self.render("new_comment.html", postId= post_id)
         else:
             self.redirect("/login")
 
@@ -400,7 +400,7 @@ class NewComment(Handler):
             return self.redirect('/')
         else:
             error = "subject and content, please!"
-            self.render("comment.html", content=content, error=error)
+            self.render("new_comment.html", content=content, error=error)
 
 
 class EditComment(Handler):
@@ -410,7 +410,7 @@ class EditComment(Handler):
             comments = db.get(key)
             if comments == None or comments.name != self.user.name:
                 return self.redirect('/')
-            self.render("editcomment.html", comments = comments)
+            self.render("edit_comment.html", comments = comments)
         else:
             return self.redirect('/login')
 
@@ -418,10 +418,13 @@ class EditComment(Handler):
     def post(self, comment_id):
         if not self.user:
             return self.redirect('/login')
+
         content = self.request.get('content')
         name= self.request.get('name')
         key = db.Key.from_path('Comment', int(comment_id))
+
         comments = db.get(key)
+
         if comments == None or comments.name != self.user.name:
             return self.redirect('/')
         if content:
@@ -431,7 +434,7 @@ class EditComment(Handler):
             self.redirect('/')
         else:
             error = 'Please add some content'
-            self.render('editcomment.html', content=content, error=error)
+            self.render('edit_comment.html', content=content, error=error)
 
 
 
@@ -445,7 +448,7 @@ class DeleteComment(Handler):
         if not self.user:
             self.redirect("/login")
         else:
-            self.render('deletecomment.html', post_id=id)
+            self.render('delete_comment.html', post_id=id)
 
     def post(self, comment_id):
         if self.user:
@@ -465,24 +468,34 @@ class LikePost(Handler):
             return self.redirect("/login")
 
         name = self.user.name
-        q = db.Query(Likes)
-        q.filter('post_id =', int(post_id)).filter('name =', name)
+        # search the db for all likes
+        query = db.Query(Likes)
+        # filter for this post & this user
+        query.filter('post_id =', int(post_id)).filter('name =', name)
+
         created = ''
-        for p in q.run():
+        for p in query.run():
             return self.redirect('/')
 
+        # add the like to the db
         pid = int(post_id)
         l = Likes(name = name, post_id = pid)
         l.put()
+
+        # get the post id
         key = db.Key.from_path("Post", pid, parent=blog_key())
         posts = db.get(key)
+
         if posts == None:
             return self.redirect('/')
 
+        # set initial like
         if posts.likes == None:
             posts.likes = 1
+        # increment if likes already exist
         else:
             posts.likes += 1
+        # TODO: add an "unlike" feature
         posts.put()
         self.redirect('/')
 
@@ -525,15 +538,15 @@ class Welcome(Handler):
 
 app = webapp2.WSGIApplication([('/', HomePage),
                                ('/([0-9]+)', PostPage),
-                               ('/newpost', NewPost),
+                               ('/new_post', NewPost),
                                ('/signup', Register),
                                ('/login', Login),
                                ('/logout', Logout),
-                               ('/([0-9]+)/editpost', EditPost),
-                               ('/([0-9]+)/deletepost', DeletePost),
-                               ('/newcomment/([0-9]+)', NewComment),
-                               ('/editcomment/([0-9]+)', EditComment),
-                               ('/deletecomment/([0-9]+)', DeleteComment),
+                               ('/([0-9]+)/edit_post', EditPost),
+                               ('/([0-9]+)/delete_post', DeletePost),
+                               ('/new_comment/([0-9]+)', NewComment),
+                               ('/edit_comment/([0-9]+)', EditComment),
+                               ('/delete_comment/([0-9]+)', DeleteComment),
                                ('/([0-9]+)/like', LikePost),
                                ('/welcome', Welcome),
                                ],
