@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" type="text/css" href="/css/main.css">
+
+        <title>Udacity Multi User Blog</title>
+    </head>
+
+    <body>
+        <div>
+            <div class="row">
+                <div>
+                    <a href="/" class="main-title logo">
+                        Uncreative Title Here
+                    </a>
+
+                </div>
+            </div>
+
+            <div>
+                {% if not user %}
+                    <div class="row band-top">
+                        <div>
+                            <a href="/login" class="login-link">
+                                Login
+                            </a>
+                        </div>
+
+                        <div>
+                            <a href="/signup" class="login-link">
+                                Sign up
+                            </a>
+                        </div>
+                    </div>
+                {% else %}
+                    <div class="row band-top">
+                        <p class="logged-in">User: {{user.name}}</p>
+                            <div>
+                                <a href="/logout" class="nav-top">
+                                    Logout
+                                </a>
+                            </div>
+
+                            <div>
+                                <a href="/newpost" class="nav-top">
+                                    Newpost
+                                </a>
+                            </div>
+                    </div>
+                {% endif %}
+
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-md-12">
+                    <div id="content">
+                        {% block content %}
+                        {% endblock %}
+                    </div>
+                </div>
+            </div>
+
+
+            </div>
+        </div>
+
+
+    </body>
+</html>

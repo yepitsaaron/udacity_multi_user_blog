@@ -1,0 +1,58 @@
+<div class="post">
+    <div class="post-heading">
+        <div class="post-title">
+            {{p.subject}}
+        </div>
+        <br>
+        <div class="post-date">
+            {{p.created.strftime("%b %d, %Y")}}
+        </div>
+    </div>
+    <div class="post-content">
+        {{p._render_text | safe}}
+    </div>
+        <br>
+        By: {{p.name.name}}
+        <br>
+        <p>Likes: {{p.likes}} </p>
+
+        {% if user and p.name.key().id() == user.key().id() %}
+
+                <a href="/{{p.key().id()}}/editpost" class="nav">Edit</a>
+
+                <a href="/{{p.key().id()}}/deletepost" class="nav">Delete</a>
+
+                {% elif p.name.name != user.name %}
+                    <form action="/{{p.key().id()}}/like" method="post">
+                        <!-- <input type="hidden" value="{{user.name}}" name="name"> -->
+                        <input type="submit" value="Like">
+                    </form>
+
+                    <a href="/newcomment/{{p.key().id()}}" class="nav">Comment</a>
+
+                <br>
+                <br>
+
+
+                <h3>Comments</h3>
+                {% for c in comments %}
+
+                    {% if p.key().id() == c.post_id.key().id() %}
+                        <strong>{{c.name}}: </strong>{{c.content}}
+                        <br>
+
+
+
+                    {% endif %}
+
+                    {% if c.name == user.name %}
+
+                        <a href="/editcomment/{{c.key().id()}}" class="nav-comments">Edit</a> | <a href="/deletecomment/{{c.key().id()}}" class="nav-comments">Delete</a>
+
+                    {% endif %}
+
+
+
+                {% endfor %}
+        {% endif %}
+</div>
