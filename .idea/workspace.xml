@@ -10,7 +10,7 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="CoverageDataManager">
-    <SUITE FILE_PATH="coverage/basic blog - try5$basic_blog___try5.coverage" NAME="basic blog - try5 Coverage Results" MODIFIED="1489645701573" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
+    <SUITE FILE_PATH="coverage/basic blog - try5$basic_blog___try5.coverage" NAME="basic blog - try5 Coverage Results" MODIFIED="1489692090236" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
   </component>
   <component name="CreatePatchCommitExecutor">
     <option name="PATCH_PATH" value="" />
@@ -58,16 +58,6 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="new_post.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/templates/new_post.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="permalink.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/templates/permalink.html">
           <provider selected="true" editor-type-id="text-editor">
@@ -101,8 +91,8 @@
       <file leaf-file-name="post.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/templates/post.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="150">
-              <caret line="14" column="30" lean-forward="true" selection-start-line="14" selection-start-column="30" selection-end-line="14" selection-end-column="30" />
+            <state relative-caret-position="262">
+              <caret line="24" column="51" lean-forward="true" selection-start-line="24" selection-start-column="24" selection-end-line="24" selection-end-column="51" />
               <folding />
             </state>
           </provider>
@@ -111,8 +101,8 @@
       <file leaf-file-name="blog.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/blog.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="156">
-              <caret line="96" column="20" lean-forward="false" selection-start-line="96" selection-start-column="18" selection-end-line="96" selection-end-column="20" />
+            <state relative-caret-position="393">
+              <caret line="382" column="12" lean-forward="false" selection-start-line="382" selection-start-column="12" selection-end-line="382" selection-end-column="12" />
               <folding>
                 <element signature="e#0#9#0" expanded="true" />
               </folding>
@@ -140,6 +130,8 @@
       <find>p =</find>
       <find>Post(</find>
       <find>p=</find>
+      <find>likepo</find>
+      <find>deletepost</find>
     </findStrings>
     <dirStrings>
       <dir>$PROJECT_DIR$/templates</dir>
@@ -173,8 +165,7 @@
     <sorting>DEFINITION_ORDER</sorting>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="44" />
-    <option name="y" value="396" />
+    <option name="y" value="23" />
     <option name="width" value="1440" />
     <option name="height" value="873" />
   </component>
@@ -518,7 +509,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="44" y="396" width="1440" height="873" extended-state="0" />
+    <frame x="0" y="23" width="1440" height="873" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24964234" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
@@ -552,7 +543,7 @@
       <breakpoints>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/blog.py</url>
-          <line>405</line>
+          <line>422</line>
         </line-breakpoint>
       </breakpoints>
       <option name="time" value="1" />
@@ -664,14 +655,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/templates/delete_comment.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/templates/delete_post.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="30">
@@ -768,14 +751,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/templates/post.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="150">
-          <caret line="14" column="30" lean-forward="true" selection-start-line="14" selection-start-column="30" selection-end-line="14" selection-end-column="30" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/templates/front.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="120">
@@ -784,10 +759,26 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/templates/delete_comment.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="150">
+          <caret line="10" column="8" lean-forward="true" selection-start-line="10" selection-start-column="8" selection-end-line="10" selection-end-column="8" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/post.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="262">
+          <caret line="24" column="51" lean-forward="true" selection-start-line="24" selection-start-column="24" selection-end-line="24" selection-end-column="51" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/blog.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="156">
-          <caret line="96" column="20" lean-forward="false" selection-start-line="96" selection-start-column="18" selection-end-line="96" selection-end-column="20" />
+        <state relative-caret-position="393">
+          <caret line="382" column="12" lean-forward="false" selection-start-line="382" selection-start-column="12" selection-end-line="382" selection-end-column="12" />
           <folding>
             <element signature="e#0#9#0" expanded="true" />
           </folding>

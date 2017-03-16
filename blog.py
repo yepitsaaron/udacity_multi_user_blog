@@ -77,6 +77,18 @@ def render_post(response, post):
 
 
 ### user stuff
+def login_required(func):
+    """
+    A decorator to confirm a user is logged in or redirect as needed.
+    """
+    def login(self, *args, **kwargs):
+        # Redirect to login if user not logged in, else execute func.
+        if not self.user:
+            self.redirect("/login")
+        else:
+            func(self, *args, **kwargs)
+    return login
+
 
 def make_salt(length=5):
     return ''.join(random.choice(letters) for x in xrange(length))
@@ -358,15 +370,20 @@ class DeletePost(Handler):
             if not self.user:
                 self.redirect("/login")
             else:
-                self.render('delete_post.html', post_id=id)
+                if self.user.key().id() == post.name.key().id():
+                    self.render('delete_post.html', post_id=id)
 
     def post(self, post_id):
         if self.user:
             key = db.Key.from_path("Post", int(post_id), parent=blog_key())
             post = db.get(key)
 
-            post.delete()
-            self.redirect('/')
+            if self.user.key().id() == post.name.key().id():
+                post.delete()
+                self.redirect('/')
+            else:
+                pass
+                ## TODO - throw an error
         else:
             return self.redirect('/login')
 
@@ -442,21 +459,24 @@ class EditComment(Handler):
 class DeleteComment(Handler):
 
     def get(self, post_id):
-        key = db.Key.from_path('Comment', post_id)
-        comments = db.get(key)
-
-        if not self.user:
-            self.redirect("/login")
+        if self.user:
+            key = db.Key.from_path('Comment', int(post_id))
+            comments = db.get(key)
+            if comments == None or comments.name != self.user.name:
+                return self.redirect('/')
+            self.render("delete_comment.html", comments = comments)
         else:
-            self.render('delete_comment.html', post_id=id)
+            return self.redirect('/login')
+
 
     def post(self, comment_id):
         if self.user:
             key = db.Key.from_path('Comment', int(comment_id))
             comments = db.get(key)
 
-            comments.delete()
-            self.redirect('/')
+            if comments.name == self.user.name:
+                comments.delete()
+                self.redirect('/')
 
 
 
@@ -477,7 +497,8 @@ class LikePost(Handler):
         for p in query.run():
             return self.redirect('/')
 
-        # add the like to the db
+        # add the like action to the db, even if its the author
+        # I can change this to not allow the like to be stored, but capturing data is nice for user intent review
         pid = int(post_id)
         l = Likes(name = name, post_id = pid)
         l.put()
@@ -486,20 +507,23 @@ class LikePost(Handler):
         key = db.Key.from_path("Post", pid, parent=blog_key())
         posts = db.get(key)
 
-        if posts == None:
-            return self.redirect('/')
+        # ensure the author can't like their own post
+        if posts.name != self.user.name:
+            if posts == None:
+                return self.redirect('/')
 
-        # set initial like
-        if posts.likes == None:
-            posts.likes = 1
-        # increment if likes already exist
-        else:
-            posts.likes += 1
+            # set initial like
+            if posts.likes == None:
+                posts.likes = 1
+            # increment if likes already exist
+            else:
+                posts.likes += 1
+
+            # save to the db
+            posts.put()
+            self.redirect('/')
         # TODO: add an "unlike" feature
 
-        # save to the db
-        posts.put()
-        self.redirect('/')
 
 
 
