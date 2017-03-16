@@ -1,6 +1,6 @@
 ### View Hosted Site
 
-Visit https://multi-user-blog-149019.appspot.com/
+Visit https://udacity-multi-user-blog-158617.appspot.com/
 
 
 ### Run On Your Machine
